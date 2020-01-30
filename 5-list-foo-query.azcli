@@ -6,8 +6,8 @@ value=Unattached
 
 #load a variable with the list based on the property and value
 listFoo=$(az disk list -g $rg \
-             --query "[?$property=='$value']".id \
-             -o tsv | sed "s/.*/& /" | tr -d '\n' | rev | cut -c 2- | rev)
+                       --query "[?$property=='$value']".id \
+                       -o tsv | sed "s/.*/& /" | tr -d '\n' | rev | cut -c 2- | rev)
 
 #load a file with the list based on the property and value
 az disk list -g $rg \
