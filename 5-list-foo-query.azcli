@@ -1,6 +1,6 @@
 #listFoo using a configured query value of a resource property
 #example list all disks in an RG that are Unattached and formated listFoo style file and variable
-rg=prod
+rg=resourceGroupName
 property=diskState
 value=Unattached
 
