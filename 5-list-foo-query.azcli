@@ -1,0 +1,15 @@
+#listFoo using a configured query value of a resource property
+#example list all disks in an RG that are Unattached and formated listFoo style file and variable
+rg=prod
+property=diskState
+value=Unattached
+
+#load a variable with the list based on the property and value
+listFoo=$(az disk list -g $rg \
+             --query "[?$property=='$value']".id \
+             -o tsv | sed "s/.*/& /" | tr -d '\n' | rev | cut -c 2- | rev)
+
+#load a file with the list based on the property and value
+az disk list -g $rg \
+             --query "[?$property=='$value']".id \
+             -o tsv | sed "s/.*/& /" | tr -d '\n' | rev | cut -c 2- | rev>>$property.txt
