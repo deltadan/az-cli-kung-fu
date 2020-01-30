@@ -1,0 +1,14 @@
+#!/bin/bash
+###########################################################################################
+# Azure CLI Kung-Fu - Blog post
+# Dan Patrick - @deltadan
+#
+#Script Purpose
+# - stop a list of azure vms listed in the array (not deallocate)
+###########################################################################################
+array=(vm1Name vm2Name)
+for vms in "${array[@]}"
+do
+    az vm stop --resource-group $rg \
+               --name $vms
+done

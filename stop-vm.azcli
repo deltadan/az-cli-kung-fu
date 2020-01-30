@@ -1,0 +1,12 @@
+#!/bin/bash
+###########################################################################################
+# Azure CLI Kung-Fu - Blog post
+# Dan Patrick - @deltadan
+#
+#Script Purpose
+# - stop an azure vm (not deallocate)
+###########################################################################################
+rg=resourceGroupName
+vm=vmName
+az vm stop --resource-group $rg \
+           --name $vm

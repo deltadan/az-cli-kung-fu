@@ -1,0 +1,13 @@
+#!/bin/bash
+###########################################################################################
+# Azure CLI Kung-Fu - Blog post
+# Dan Patrick - @deltadan
+#
+#Script Purpose
+# - load the output of a az command into a variable named $listFoo
+# - load the output of a az command into a file in the current directory named list-foo.txt
+###########################################################################################
+rg=resourceGroupName
+command=vm
+listFoo=$(az $command list -g $rg --query [].name --output tsv | sed "s/.*/& /" | tr -d '\n' | rev | cut -c 2- | rev)
+az $command list -g $rg --query [].name --output tsv | sed "s/.*/& /" | tr -d '\n' | rev | cut -c 2- | rev>>list-foo.txt
