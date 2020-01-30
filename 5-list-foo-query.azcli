@@ -1,3 +1,14 @@
+#!/bin/bash
+###########################################################################################
+# Azure CLI Kung-Fu - Blog post
+# Dan Patrick - @deltadan
+#
+#Script Purpose
+# - load the output of a az query command into a variable named $listFoo
+# - load the output of a az aeury command into a file in the current directory named property.txt
+###########################################################################################
+
+
 #listFoo using a configured query value of a resource property
 #example list all disks in an RG that are Unattached and formated listFoo style file and variable
 rg=resourceGroupName
