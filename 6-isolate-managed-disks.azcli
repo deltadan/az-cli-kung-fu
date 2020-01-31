@@ -1,0 +1,26 @@
+#!/bin/bash
+###########################################################################################
+# Azure CLI Kung-Fu - Blog post
+# Dan Patrick - @deltadan
+#
+#Script Purpose
+# - Use listFoo to find Managed Disks in an Unattached state and move them to an different
+# resource group.
+# **NOTE: this will lock the resource group for other operations while running.
+###########################################################################################
+
+az account set -s "subscriptionNameHere"
+destRg=destinationResourceGroup
+rg=currentResourceGroup
+property=diskState
+value=Unattached
+#load a variable with the list based on the property and value
+listFoo=$(az disk list -g $rg \
+                       --query "[?$property=='$value']".id \
+                       -o tsv | sed "s/.*/& /" | tr -d '\n' | rev | cut -c 2- | rev)
+array=($listFoo)
+for disks in "${array[@]}"
+do
+    az resource move --destination-group $destRg \
+                     --ids $disks
+done
