@@ -1,0 +1,28 @@
+#!/bin/bash
+###########################################################################################
+# Azure CLI Kung-Fu - Blog post
+# Dan Patrick - @deltadan
+#
+#Script Purpose
+# Convert managed disks from current type to new type
+# Load variables 
+# - Update Resource Group
+# - currentDiskType should be the types you have now and wish to change
+# - newDiskType should = the type you want the disk to be after this script is run
+###########################################################################################
+rg=resourceGroup
+currentDiskType=Premium_LRS
+newDiskType=Standard_LRS
+# Load listFoo based on the query
+listFoo=$(az disk list -g $rg \
+             --query "[?sku.name=='$currentDiskType']".name -o table \
+             -o tsv | sed "s/.*/& /" | tr -d '\n' | rev | cut -c 2- | rev)
+# Run loop to update the disks based on array in listFoo
+array=($listFoo)
+for disks in "${array[@]}"
+do
+    az disk update -g $rg \
+                   -n $disks \
+                   --sku $newDiskType \
+                   --no-wait
+done

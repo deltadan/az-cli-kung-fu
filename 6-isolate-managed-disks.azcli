@@ -18,6 +18,7 @@ value=Unattached
 listFoo=$(az disk list -g $rg \
                        --query "[?$property=='$value']".id \
                        -o tsv | sed "s/.*/& /" | tr -d '\n' | rev | cut -c 2- | rev)
+# Run loop to update the disks based on array in listFoo
 array=($listFoo)
 for disks in "${array[@]}"
 do
